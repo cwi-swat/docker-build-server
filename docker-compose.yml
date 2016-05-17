@@ -1,0 +1,17 @@
+jenkins:
+  image: jenkins:2.3-alpine
+  ports:
+   - "8080:8080"
+  volumes:
+   - /export/scratch1/jenkins/home:/var/jenkins_home
+  user: "989"
+  restart: always
+
+nexus:
+  image: sonatype/nexus3:3.0.0
+  ports: 
+    - "8081:8081"
+  volumes:
+  # nexus assume the user 200 is owning this folder!
+   - /export/scratch1/nexus/data:/nexus-data
+  restart: always
