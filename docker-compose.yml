@@ -9,6 +9,13 @@ jenkins:
    - /export/scratch1/jenkins/home:/var/jenkins_home
   user: "989"
   restart: always
+  environment:
+   JAVA_OPTS: "-Duser.home=/var/jenkins_home"
+   HOME: "/var/jenkins_home"
+   USER: "jenkins"
+#  tmpfs: 
+#    - /tmp
+#    - /run
 
 nexus:
   image: sonatype/nexus3:3.0.0
