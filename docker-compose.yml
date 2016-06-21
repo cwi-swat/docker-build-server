@@ -9,21 +9,22 @@ services:
   jenkins:
     #image: swat/jenkins:2.3-alpine
     #image: jenkins:2.3
-    build: 
-      context: custom-jenkins/
-      args:
-        # if you change this rebuild:
-        #   sudo su
-        #   docker-compose up -d --build
-        - uid=989
-        - gid=989
-        - JENKINS_VERSION=2.3
-        - JENKINS_SHA=d3097c9c81c7d5074d71a5059d85cf8977c1568e
+    image: jenkinsci/jenkins:2.9
+#    build: 
+#      context: custom-jenkins/
+#      args:
+#        # if you change this rebuild:
+#        #   sudo su
+#        #   docker-compose up -d --build
+#        - uid=989
+#        - gid=989
+#        - JENKINS_VERSION=2.20
+#        - JENKINS_SHA=e5238e09c8a6dbd96daeb0f1bf2baf20501def28
     ports:
      - "8080:8080"
     volumes:
      - /export/scratch1/jenkins/home:/var/jenkins_home
-    user: "989"
+    user: "jenkins"
     restart: always
     environment:
      JAVA_OPTS: "-Duser.home=/var/jenkins_home -Djava.awt.headless=true"
@@ -36,6 +37,7 @@ services:
     image: sonatype/nexus3:3.0.0
     ports: 
       - "8081:8081"
+    user: "nexus"
     volumes:
     # nexus assume the user 200 is owning this folder!
      - /export/scratch1/nexus/data:/nexus-data
