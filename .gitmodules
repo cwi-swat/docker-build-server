@@ -1,3 +1,0 @@
-[submodule "custom-jenkins"]
-	path = custom-jenkins
-	url = https://github.com/jenkinsci/docker
