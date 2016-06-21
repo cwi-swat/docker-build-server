@@ -1,15 +1,24 @@
 version: '2'
+# after changes to the file run (will recreate and restart only the necessary things): 
+#   sudo su
+#   docker-compose up -d
 # stop running instances: 
-#   sudo -i docker-compose stop
-# after changes to the file run: 
-#   sudo -i docker-compose pull
-#   sudo -i docker-compose create
-# to restart instances: 
-#   sudo -i docker-compose start
+#   sudo su
+#   docker-compose stop
 services:
   jenkins:
     #image: swat/jenkins:2.3-alpine
-    image: jenkins:2.3
+    #image: jenkins:2.3
+    build: 
+      context: custom-jenkins/
+      args:
+        # if you change this rebuild:
+        #   sudo su
+        #   docker-compose up -d --build
+        - uid=989
+        - gid=989
+        - JENKINS_VERSION=2.3
+        - JENKINS_SHA=d3097c9c81c7d5074d71a5059d85cf8977c1568e
     ports:
      - "8080:8080"
     volumes:
@@ -17,7 +26,7 @@ services:
     user: "989"
     restart: always
     environment:
-     JAVA_OPTS: "-Duser.home=/var/jenkins_home"
+     JAVA_OPTS: "-Duser.home=/var/jenkins_home -Djava.awt.headless=true"
      HOME: "/var/jenkins_home"
      USER: "jenkins"
     tmpfs: 
