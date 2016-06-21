@@ -7,19 +7,7 @@ version: '2'
 #   docker-compose stop
 services:
   jenkins:
-    #image: swat/jenkins:2.3-alpine
-    #image: jenkins:2.3
     image: jenkinsci/jenkins:2.9
-#    build: 
-#      context: custom-jenkins/
-#      args:
-#        # if you change this rebuild:
-#        #   sudo su
-#        #   docker-compose up -d --build
-#        - uid=989
-#        - gid=989
-#        - JENKINS_VERSION=2.20
-#        - JENKINS_SHA=e5238e09c8a6dbd96daeb0f1bf2baf20501def28
     ports:
      - "8080:8080"
     volumes:
@@ -27,9 +15,8 @@ services:
     user: "jenkins"
     restart: always
     environment:
-     JAVA_OPTS: "-Duser.home=/var/jenkins_home -Djava.awt.headless=true -Xmx2G"
+     JAVA_OPTS: "-Xmx2G -Djava.awt.headless=true"
      HOME: "/var/jenkins_home"
-     USER: "jenkins"
     tmpfs: 
       - /tmp:size=1g
 
