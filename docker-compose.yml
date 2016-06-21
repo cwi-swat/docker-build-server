@@ -1,40 +1,46 @@
-# stop running instances: sudo /usr/local/bin/docker-compose stop
-# after changes to the file run sudo /usr/local/bin/docker-compose create
-# to restart instances: sudo /usr/local/bin/docker-compose start
-jenkins:
-  image: jenkins:2.3-alpine
-  ports:
-   - "8080:8080"
-  volumes:
-   - /export/scratch1/jenkins/home:/var/jenkins_home
-  user: "989"
-  restart: always
-  environment:
-   JAVA_OPTS: "-Duser.home=/var/jenkins_home"
-   HOME: "/var/jenkins_home"
-   USER: "jenkins"
-#  tmpfs: 
-#    - /tmp
-#    - /run
+version: '2'
+# stop running instances: 
+#   sudo -i docker-compose stop
+# after changes to the file run: 
+#   sudo -i docker-compose pull
+#   sudo -i docker-compose create
+# to restart instances: 
+#   sudo -i docker-compose start
+services:
+  jenkins:
+    #image: swat/jenkins:2.3-alpine
+    image: jenkins:2.3
+    ports:
+     - "8080:8080"
+    volumes:
+     - /export/scratch1/jenkins/home:/var/jenkins_home
+    user: "989"
+    restart: always
+    environment:
+     JAVA_OPTS: "-Duser.home=/var/jenkins_home"
+     HOME: "/var/jenkins_home"
+     USER: "jenkins"
+    tmpfs: 
+      - /tmp:size=1g
 
-nexus:
-  image: sonatype/nexus3:3.0.0
-  ports: 
-    - "8081:8081"
-  volumes:
-  # nexus assume the user 200 is owning this folder!
-   - /export/scratch1/nexus/data:/nexus-data
-  restart: always
+  nexus:
+    image: sonatype/nexus3:3.0.0
+    ports: 
+      - "8081:8081"
+    volumes:
+    # nexus assume the user 200 is owning this folder!
+     - /export/scratch1/nexus/data:/nexus-data
+    restart: always
 
-artifactory:
-  image: jfrog-docker-reg2.bintray.io/jfrog/artifactory-oss:latest
-  ports: 
-    - "8082:8081"
-  volumes:
-   - /export/scratch1/artifactory/data:/var/opt/jfrog/artifactory/data
-   - /export/scratch1/artifactory/logs:/var/opt/jfrog/artifactory/logs
-   - /export/scratch1/artifactory/backups:/var/opt/jfrog/artifactory/backups
-   - /export/scratch1/artifactory/etc:/var/opt/jfrog/artifactory/etc
-  restart: always
+  artifactory:
+    image: jfrog-docker-reg2.bintray.io/jfrog/artifactory-oss:latest
+    ports: 
+      - "8082:8081"
+    volumes:
+     - /export/scratch1/artifactory/data:/var/opt/jfrog/artifactory/data
+     - /export/scratch1/artifactory/logs:/var/opt/jfrog/artifactory/logs
+     - /export/scratch1/artifactory/backups:/var/opt/jfrog/artifactory/backups
+     - /export/scratch1/artifactory/etc:/var/opt/jfrog/artifactory/etc
+    restart: always
   
 
