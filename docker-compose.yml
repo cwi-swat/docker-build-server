@@ -27,7 +27,7 @@ services:
     user: "jenkins"
     restart: always
     environment:
-     JAVA_OPTS: "-Duser.home=/var/jenkins_home -Djava.awt.headless=true"
+     JAVA_OPTS: "-Duser.home=/var/jenkins_home -Djava.awt.headless=true -Xmx2G"
      HOME: "/var/jenkins_home"
      USER: "jenkins"
     tmpfs: 
